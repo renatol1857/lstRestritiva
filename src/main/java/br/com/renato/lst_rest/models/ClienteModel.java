@@ -8,9 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import br.com.renato.lst_rest.enumerator.StatusEnum;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,8 +24,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tblst_restritiva_geral")
-public class BlackList implements Serializable {
+@Table(name = "tbcliente")
+public class ClienteModel implements Serializable {
 
 	@Transient
 	private static final long serialVersionUID = 1L;
@@ -33,24 +35,42 @@ public class BlackList implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 30, unique = true)
+	@Setter(AccessLevel.NONE)
+	@ManyToOne
+	private Usuario adm;
+
+	@Column(length = 100, nullable = false, unique = true)
+	private String nome;
+
+	@Column(length = 80, nullable = true, unique = true)
 	@EqualsAndHashCode.Include()
-	private String fone;
+	private String alias;
+
+	@Column(length = 500, nullable = true)
+	private String descricao;
+
+	@Column(columnDefinition = "smallint default 1 NOT NULL")
+	private int status;
 
 	@Setter(AccessLevel.NONE)
 	@Column(columnDefinition = "timestamp without time zone default CURRENT_TIMESTAMP")
 	private Date dh;
 
-	public BlackList(String fullFone, String ddd, String fone) {
+	public ClienteModel(String nome, String alias, Usuario usuario, String descricao) {
 		super();
-		this.fone = fone;
+		this.adm = usuario;
+		this.nome = nome;
+		this.alias = alias;
+		this.descricao = descricao;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public StatusEnum getStatus() {
+		return StatusEnum.toEnum(this.status);
 	}
-	
 
+	public void setStatus(StatusEnum status) {
+		this.status = status.getCod();
+	}
 
 
 }

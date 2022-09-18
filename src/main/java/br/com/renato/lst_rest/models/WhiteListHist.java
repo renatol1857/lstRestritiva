@@ -31,7 +31,7 @@ public class WhiteListHist implements Serializable {
 	private Long id;
 
 	@ManyToOne(cascade = CascadeType.REMOVE)
-	private Cliente cliente;
+	private ClienteModel cliente;
 
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	@EqualsAndHashCode.Include()
@@ -40,7 +40,7 @@ public class WhiteListHist implements Serializable {
 	@Column(columnDefinition = "timestamp without time zone default CURRENT_TIMESTAMP")
 	private Date dh;
 
-	public WhiteListHist(Cliente cliente, WhiteList lstGeral) {
+	public WhiteListHist(ClienteModel cliente, WhiteList lstGeral) {
 		super();
 		this.cliente = cliente;
 		this.lstGeral = lstGeral;

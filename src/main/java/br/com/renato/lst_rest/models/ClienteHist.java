@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import br.com.renato.lst_rest.enumerator.AcaoEnum;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -34,7 +35,7 @@ public class ClienteHist implements Serializable {
 
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	@EqualsAndHashCode.Include()
-	private Cliente cliente;
+	private ClienteModel cliente;
 
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Usuario adm;
@@ -49,16 +50,21 @@ public class ClienteHist implements Serializable {
 		super();
 	}
 
-	public ClienteHist(Usuario adm, Cliente cliente, Integer acao, String descricao) {
+	public ClienteHist(Usuario adm, ClienteModel cliente, AcaoEnum acao, String descricao) {
 		super();
 		this.adm = adm;
 		this.cliente = cliente;
-		this.acao = acao;
+		this.acao = acao.getCod();
 		this.descricao = descricao;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public AcaoEnum getStatus() {
+		return AcaoEnum.toEnum(this.acao);
 	}
+
+	public void setStatus(AcaoEnum status) {
+		this.acao = status.getCod();
+	}
+
 
 }

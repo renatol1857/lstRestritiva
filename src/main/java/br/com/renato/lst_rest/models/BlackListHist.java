@@ -26,7 +26,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tblista_restritiva_hist")
+@Table(name = "tblst_restritiva_geral_hist")
 public class BlackListHist implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 1L;
@@ -38,7 +38,7 @@ public class BlackListHist implements Serializable {
 
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	@EqualsAndHashCode.Include()
-	private Cliente cliente;
+	private ClienteModel cliente;
 
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	private BlackList lstRestritiva;
@@ -47,7 +47,7 @@ public class BlackListHist implements Serializable {
 	@Column(columnDefinition = "timestamp without time zone default CURRENT_TIMESTAMP")
 	private Date dh;
 
-	public BlackListHist(Cliente cliente, BlackList lstRestritiva) {
+	public BlackListHist(ClienteModel cliente, BlackList lstRestritiva) {
 		super();
 		this.cliente = cliente;
 		this.lstRestritiva = lstRestritiva;

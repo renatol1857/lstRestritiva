@@ -12,9 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -23,6 +25,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tbMCDU_hist")
 public class McduHist implements Serializable {
 	@Transient
+	@Setter(AccessLevel.NONE)
 	private static final long serialVersionUID = 1L;
 
 	@Id

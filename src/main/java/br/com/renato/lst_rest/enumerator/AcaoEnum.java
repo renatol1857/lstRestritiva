@@ -13,7 +13,7 @@ public enum AcaoEnum {
 	private int cod;
 	private String descricao;
 	
-	public AcaoEnum toEnum(Integer cod) {
+	public static AcaoEnum toEnum(Integer cod) {
 		if (cod == null)
 			throw new IllegalArgumentException(String.format("Cod fora do padrao tipo %s", AcaoEnum.class.getName()));
 		for (AcaoEnum x : AcaoEnum.values()) {
@@ -22,4 +22,6 @@ public enum AcaoEnum {
 		}	
 		throw new IllegalArgumentException(String.format("Cod fora do padrao tipo %s", AcaoEnum.class.getName()));
 	}
+	
+	
 }

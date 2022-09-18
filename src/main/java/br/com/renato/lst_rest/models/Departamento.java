@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -18,27 +19,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "tbcliente")
-public class Cliente implements Serializable {
-
+@Table(name = "tbdpto")
+public class Departamento implements Serializable {
 	@Transient
+	@Setter(AccessLevel.NONE)
 	private static final long serialVersionUID = 1L;
+	
+	@Setter(AccessLevel.NONE)
+	private Usuario adm;
 
 	@Setter(AccessLevel.NONE)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
 	@Column(length = 100, nullable = false, unique = true)
+	@Setter(AccessLevel.NONE)
 	private String nome;
 
 	@Column(length = 80, nullable = true, unique = true)
 	@EqualsAndHashCode.Include()
+	@Setter(AccessLevel.NONE)
 	private String alias;
 
 	@Column(length = 500, nullable = true)
@@ -51,16 +57,27 @@ public class Cliente implements Serializable {
 	@Column(columnDefinition = "timestamp without time zone default CURRENT_TIMESTAMP")
 	private Date dh;
 
-	public Cliente(String nome, String alias, String descricao, int status) {
+	@ManyToOne()
+	@EqualsAndHashCode.Include()
+	private ClienteModel cliente;
+	
+	public Departamento(String nome, String alias, ClienteModel cliente, Usuario usuario, String descricao) {
 		super();
 		this.nome = nome;
 		this.alias = alias;
+		this.cliente = cliente;
+		this.adm = usuario;
 		this.descricao = descricao;
-		this.status = StatusEnum.DESATIVADO.getCod();
+	}
+	
+	public StatusEnum getStatus() {
+		return StatusEnum.toEnum(this.status);
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setStatus(StatusEnum status) {
+		this.status = status.getCod();
 	}
 
+
+	
 }

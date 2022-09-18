@@ -14,6 +14,16 @@ public enum StatusEnum {
 	
 	private int cod;
 	private String descricao;
+	
+	public static StatusEnum toEnum(Integer cod) {
+		if (cod == null)
+			throw new IllegalArgumentException(String.format("Cod fora do padrao tipo %s", StatusEnum.class.getName()));
+		for (StatusEnum x : StatusEnum.values()) {
+			if (cod.equals(x.getCod()))
+				return x;
+		}	
+		throw new IllegalArgumentException(String.format("Cod fora do padrao tipo %s", StatusEnum.class.getName()));
+	}
 		
 	
 }
