@@ -8,19 +8,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.renato.lst_rest.models.ClienteModel;
-import br.com.renato.lst_rest.services.ClienteService;
+import br.com.renato.lst_rest.models.Usuario;
+import br.com.renato.lst_rest.services.UsuarioService;
 
 @RestController
-@RequestMapping(path = {"/cliente","/Cliente"})
-public class ClienteController {
+@RequestMapping(path = {"/usuario","/Usuario"})
+public class UsuarioController {
 	@Autowired
-	ClienteService service;
+	UsuarioService service;
 	
-	@GetMapping("/{id}")
-	public ResponseEntity<ClienteModel> buscarPorId(@PathVariable(required = true, value = "id") Long id) {
-		ClienteModel obj = service.buscarPorId(id);
+	@GetMapping(path = "/{id}")
+	private ResponseEntity<Usuario> BuscarPorId(@PathVariable(value = "id",required = true) Long id) {
+		Usuario obj = service.BuscarPorId(id);
 		return ResponseEntity.status(HttpStatus.OK).body(obj);
-		}
+	}
+	
 
 }

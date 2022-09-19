@@ -21,7 +21,7 @@ public class ClienteService {
 
 	public ClienteModel buscarPorId(Long id) {
 		Optional<ClienteModel> obj = repo.findById (id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(String.format("Categoria nao encontrada ID [%d] Tipo %s", id, ClienteModel.class.getName())));
+		return obj.orElseThrow(() -> new ObjectNotFoundException(String.format("Cliente não encontrada ID [%d] em [%s]", id,  ClienteService.class.getSimpleName())));
 	}
 	
 }

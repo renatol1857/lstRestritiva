@@ -11,6 +11,7 @@ import br.com.renato.lst_rest.services.exception.ObjectNotFoundException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
+	
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
 		StandardError error = new StandardError(HttpStatus.NOT_FOUND.value(), e.getMessage());
