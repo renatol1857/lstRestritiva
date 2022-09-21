@@ -40,10 +40,6 @@ public class Usuario implements Serializable {
 	@Column(length = 200, nullable = false)
 	private String nome;
 
-	@Setter(AccessLevel.NONE)
-	@ManyToOne
-	private Usuario adm;
-
 	@Column(length = 100, nullable = false, unique = true)
 	@EqualsAndHashCode.Include()
 	private String logon;

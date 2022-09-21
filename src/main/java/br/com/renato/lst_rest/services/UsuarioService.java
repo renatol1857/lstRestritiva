@@ -11,13 +11,19 @@ import org.springframework.stereotype.Service;
 
 import br.com.renato.lst_rest.Dtos.UsuarioDto;
 import br.com.renato.lst_rest.controllers.exception.StandardError;
+import br.com.renato.lst_rest.enumerator.AcaoEnum;
 import br.com.renato.lst_rest.models.Usuario;
+import br.com.renato.lst_rest.models.UsuarioHist;
+import br.com.renato.lst_rest.repositories.UsuarioHistRepository;
 import br.com.renato.lst_rest.repositories.UsuarioRepository;
 
 @Service
 public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repo;
+	@Autowired
+	private UsuarioHistRepository repoHist;
+	
 	
 	public ResponseEntity<Object> buscarPorId (Long id) {
 		Optional<Usuario> obj = repo.findById(id);
@@ -33,9 +39,17 @@ public class UsuarioService {
 			StandardError error = new StandardError(HttpStatus.CONFLICT.value(), String.format("Conflito na criacao de usuário."));
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
 		}
+		Usuario objAdm = null;
+		if (userDto.getIdAdm() != null) {
+			Optional<Usuario> optAdm = repo.findById(userDto.getIdAdm());
+			if (!optAdm.isEmpty())
+				objAdm = optAdm.get();
+		}
 		Usuario user = new Usuario();
 		BeanUtils.copyProperties(userDto, user);
 		Usuario obj = repo.save(user);
+		UsuarioHist hist = new UsuarioHist(obj, objAdm,AcaoEnum.CREATE,"Criado");
+		repoHist.save(hist);
 		return ResponseEntity.status(HttpStatus.CREATED).body(obj);
 	}
 
