@@ -7,5 +7,8 @@ import br.com.renato.lst_rest.models.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
+	
+	boolean existsByLogon(String logon);
+	
 
 }
