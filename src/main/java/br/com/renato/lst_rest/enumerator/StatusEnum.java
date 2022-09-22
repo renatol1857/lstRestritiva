@@ -10,7 +10,8 @@ public enum StatusEnum {
 	ATIVADO(2,"Ativado"),
 	PAUSA(3,"Pausa"),
 	MANUTENCAO(4,"Manutencao"),
-	DEMO(5,"Demonstracao");
+	DEMO(5,"Demonstracao"),
+	APAGADO(6,"Apagado");
 	
 	private int cod;
 	private String descricao;
@@ -25,5 +26,12 @@ public enum StatusEnum {
 		throw new IllegalArgumentException(String.format("Cod fora do padrao tipo %s", StatusEnum.class.getName()));
 	}
 		
+	public static Boolean isCodValid(Integer cod) {
+		for (StatusEnum x : StatusEnum.values()) {
+			if (cod.equals(x.getCod()))
+				return true;
+		}	
+		return false;
+	}
 	
 }

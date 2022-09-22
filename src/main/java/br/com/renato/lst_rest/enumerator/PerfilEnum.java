@@ -24,4 +24,12 @@ public enum PerfilEnum {
 		throw new IllegalArgumentException(String.format("Cod fora do padrao tipo %s", PerfilEnum.class.getName()));
 	}
 	
+	public static Boolean isCodValid(Integer cod) {
+		for (PerfilEnum x : PerfilEnum.values()) {
+			if (cod.equals(x.getCod()))
+				return true;
+		}	
+		return false;
+	}
+	
 }

@@ -2,11 +2,14 @@ package br.com.renato.lst_rest.controllers;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,18 +28,20 @@ public class UsuarioController {
 		return service.buscarPorId(id);
 	}
 	
-	/*
-	@PostMapping
+	@PostMapping(path = "/teste")
 	public ResponseEntity<Object> save(@RequestBody Map<String, Object> dicDados){
 		return service.save(dicDados);
 		}
-	*/
 	
 	@PostMapping
-	public ResponseEntity<Object> save(@RequestBody UsuarioDto userDto){
+	public ResponseEntity<Object> save(@RequestBody @Valid UsuarioDto userDto){
 		return service.save(userDto);
 		}
 	
+	@PutMapping(path = "/{id}")
+	public ResponseEntity<Object> update(@PathVariable(value = "id",required = true) Long id, @RequestBody @Valid UsuarioDto userDto){
+		return service.update(id, userDto);
+		}
 	
 	
 

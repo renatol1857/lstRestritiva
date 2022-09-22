@@ -18,9 +18,15 @@ public class UsuarioDto {
 	private String senha;
 	
 	private Long idAdm;
+	
+	private Integer idStatus;
+	
+	private Integer idPerfil;
 
 	@NotBlank(message = "Campo 'Logon' não pode estar vazio")
 	@Size(min = 5, max = 100, message = "Campo 'logon' deve ter entre {min} e {max} caracteres")
 	private String logon;
+	
+	
 
 }

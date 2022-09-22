@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -30,8 +29,6 @@ public class Usuario implements Serializable {
 	@Setter(AccessLevel.NONE)
 	private static final long serialVersionUID = 1L;
 
-	// private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter(AccessLevel.NONE)
@@ -44,8 +41,8 @@ public class Usuario implements Serializable {
 	@EqualsAndHashCode.Include()
 	private String logon;
 
-	@Getter(AccessLevel.NONE)
 	@Column(length = 30, nullable = false)
+	@Getter(AccessLevel.NONE)
 	private String senha;
 
 	@Column(nullable = false)
@@ -54,13 +51,20 @@ public class Usuario implements Serializable {
 	@Column(nullable = false)
 	private int perfil=1;
 
+	
 	public Usuario(String nome, String logon, String senha) {
 		super();
 		this.nome = nome;
 		this.logon = logon;
 		this.senha = senha;
-		}
-
+		}	
+	
+	public Usuario(String nome, String logon, String senha, StatusEnum status, PerfilEnum perfil) {
+		this(nome,logon,senha);
+		this.status = status.getCod();
+		this.perfil = perfil.getCod();
+	}
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -80,6 +84,12 @@ public class Usuario implements Serializable {
 	public void setStatus(StatusEnum status) {
 		this.status = status.getCod();
 	}
+
+	public Boolean isPswCorreto(String Senha) {
+		return this.senha.equals(Senha);
+	}
+
+
 
 	
 
